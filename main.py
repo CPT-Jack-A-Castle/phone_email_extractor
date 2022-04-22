@@ -30,11 +30,21 @@ def email_extractor(content):
     mo2 = email_regex.findall(content)
     return mo2
 
-text = input("essay.txt")
-matches = []
-for groups in phone_extractor(text):
-    print(groups)
-    phoneNum = "-".join([groups[1], groups[3], groups[5]])
-    matches.append(phoneNum)
-for groups in email_extractor(text):
-     matches.append(groups[0])
+
+def main():
+    text = input("essay.txt")
+    matches = []
+    for groups in phone_extractor(text):
+        phoneNum = "-".join([groups[1], groups[3], groups[5]])
+        matches.append(phoneNum)
+    for groups in email_extractor(text):
+        matches.append(groups[0])
+    return matches
+
+if __name__ == '__main__':
+    a = main()
+    for i in a:
+        if re.fullmatch(r'\d{3}-\d{3}-\d{4}', i.replace("(","").replace(")","")):
+            print(f"These are the phone numbers found:{i}\n")
+        else:
+            print(f"These are the email addresses found:{i}\n")
